@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 // eslint-disable-next-line import/newline-after-import
 
 process.on("uncaughtException", (err) => {
-  console.log(err.name, err.message);
   process.exit(1);
 });
 const dotenv = require("dotenv");
@@ -24,19 +23,14 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => {
-    console.log("DataBase Connctions Success");
-  });
+  .then(() => {});
 
 //Server Start
 const port = process.env.PORT || 3000;
 // app.use(cors());
-const server = app.listen(port, () => {
-  console.log(`Server is Running on ${port}...`);
-});
+const server = app.listen(port, () => {});
 
 process.on("unhandledRejection", (err) => {
-  console.log(err.name, err.message);
   server.close(() => {
     process.exit(1);
   });

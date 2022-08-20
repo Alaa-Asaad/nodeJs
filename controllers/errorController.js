@@ -1,8 +1,8 @@
-const AppError = require('../Utils/appError');
+const AppError = require("../Utils/appError");
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
+  err.status = err.status || "error";
 
   const handleCastErrorDB = (err) => {
     const message = `Input Invaild ${err.path}: ${err.value}`;
@@ -11,7 +11,7 @@ module.exports = (err, req, res, next) => {
   const handleValidationErrorDB = (err) => {
     const errorsMessage = Object.values(err.errors).map((el) => el.message);
 
-    const meassage = `Validation error that ${errorsMessage.join('. ')}`;
+    const meassage = `Validation error that ${errorsMessage.join(". ")}`;
     return new AppError(meassage, 400);
   };
   const handleDuplcateNameDB = (err) => {
@@ -20,13 +20,12 @@ module.exports = (err, req, res, next) => {
     return new AppError(meassage, 400);
   };
   const handleJsonWebTokenError = () =>
-    new AppError('Please log in ,Invaild Token', 401);
+    new AppError("Please log in ,Invaild Token", 401);
 
   const handleJWTExpiredError = () =>
-    new AppError('The Token Expired Please login again', 401);
+    new AppError("The Token Expired Please login again", 401);
 
   const sendErrorDev = (err, res) => {
-    console.log(err.isOperational);
     //Error that we can send to Client
     if (err.isOperational) {
       res.status(err.statusCode).json({
@@ -40,8 +39,8 @@ module.exports = (err, req, res, next) => {
       // console.error(err);
       res.status(500).json({
         error: err,
-        status: 'error',
-        message: 'Something got very worng',
+        status: "error",
+        message: "Something got very worng",
       });
     }
   };
@@ -53,17 +52,17 @@ module.exports = (err, req, res, next) => {
     });
   };
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (process.env.NODE_ENV === "production") {
     let errors = err.name;
     const errorCode = err.code;
 
-    if (errors === 'CastError') errors = handleCastErrorDB(err);
+    if (errors === "CastError") errors = handleCastErrorDB(err);
     if (errorCode === 11000) errors = handleDuplcateNameDB(err);
-    if (errors === 'ValidationError') errors = handleValidationErrorDB(err);
-    if (errors === 'JsonWebTokenError') errors = handleJsonWebTokenError();
-    if (errors === 'TokenExpiredError') errors = handleJWTExpiredError();
+    if (errors === "ValidationError") errors = handleValidationErrorDB(err);
+    if (errors === "JsonWebTokenError") errors = handleJsonWebTokenError();
+    if (errors === "TokenExpiredError") errors = handleJWTExpiredError();
     sendErrorProd(errors, res);
   }
 };
