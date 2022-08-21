@@ -30,7 +30,7 @@ mongoose
 const port = process.env.PORT || 3000;
 // app.use(cors());
 const server = app.listen(port, () => {
-  console.log("Hello there Im eng Alaa Asaad");
+  console.log("Hello there Im eng Alaa Asaad.");
 });
 
 process.on("unhandledRejection", (err) => {
