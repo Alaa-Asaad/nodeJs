@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 // eslint-disable-next-line import/newline-after-import
 
 process.on("uncaughtException", (err) => {
+  console.log(err);
   process.exit(1);
 });
 const dotenv = require("dotenv");
@@ -28,9 +29,12 @@ mongoose
 //Server Start
 const port = process.env.PORT || 3000;
 // app.use(cors());
-const server = app.listen(port, () => {});
+const server = app.listen(port, () => {
+  console.log("Hello there Im eng Alaa Asaad");
+});
 
 process.on("unhandledRejection", (err) => {
+  console.log(err);
   server.close(() => {
     process.exit(1);
   });
