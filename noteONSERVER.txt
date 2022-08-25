@@ -1,0 +1,5 @@
+to push to server 
+push first to gitlap repo
+then u must push to heroku
+git push heroku main   //// this command push main to heroku reop and make the changes 
+that's all
